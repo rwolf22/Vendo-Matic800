@@ -14,8 +14,32 @@ public class Product {
         this.location = location;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getTypeOfProduct() {
+        return typeOfProduct;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
     @Override
     public String toString() {
+       return this.location + " ) " + this.name + " " + this.price;
+
+    }
+    public String despensingMessage () {
         if (typeOfProduct.equalsIgnoreCase("Chip")) {
             return "Crunch Crunch Yum";
         }
@@ -31,6 +55,9 @@ public class Product {
         else {
             return "Do Not Have Type";
         }
+    }
+    public void sellProduct (){
+        this.stock -= 1;
 
     }
     public void setStock(int stock) {
