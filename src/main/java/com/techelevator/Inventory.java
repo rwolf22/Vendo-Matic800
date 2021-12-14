@@ -9,14 +9,17 @@ public class Inventory {
 
     private static Product[] createAllInventory () {
         List <Product> inventoryList = new ArrayList<>();
-       File inventory = new File ("vendingmachine.csv");
+       File inventory = new File ("C:\\PROJECTS\\capstone\\Capstone Project 1\\capstone-1\\vendingmachine.csv");
        try (Scanner inventoryReader = new Scanner (inventory)) {
            while (inventoryReader.hasNextLine()) {
                String lineOfText = inventoryReader.nextLine();
-               String [] informationForTheProduct = lineOfText.split("|");
-               Product newProduct = new Product (informationForTheProduct [1], Double.parseDouble(informationForTheProduct [2]),
- informationForTheProduct [3], informationForTheProduct [0]);
-           inventoryList.add (newProduct);
+               String [] informationForTheProduct = lineOfText.split("\\|");
+               String productLocation = informationForTheProduct [0];
+               String productName = informationForTheProduct [1];
+               double productPrice = Double.parseDouble(informationForTheProduct [2]);
+               String productType = informationForTheProduct [3];
+               Product newProduct = new Product (productName, productPrice, productType, productLocation);
+               inventoryList.add (newProduct);
            }
        } catch (FileNotFoundException e) {
            System.out.println("file not found");
@@ -30,7 +33,9 @@ public class Inventory {
         }
     }
     public static void displayInventory(){
-        for
+        for (Product product : INVENTORY_ARRAY) {
+            System.out.println(product);
+        }
     }
 
 
