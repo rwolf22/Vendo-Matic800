@@ -2,13 +2,17 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 public class VendingMachineCLI {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT };
-	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed MOney";
+	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
 	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
 	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_FEED_MONEY,PURCHASE_MENU_OPTION_SELECT_PRODUCT,PURCHASE_MENU_OPTION_FINISH_TRANSACTION };
@@ -35,9 +39,11 @@ public class VendingMachineCLI {
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 				while (true) {
-					System.out.println ("Current Money Provided: " + currentMoneyProvided);
+					NumberFormat currency = NumberFormat.getCurrencyInstance();
+					System.out.println ("Current Money Provided: " + currency.format(currentMoneyProvided));
 					String purchaseChoice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 					if (purchaseChoice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
+						double moneyBefore = currentMoneyProvided;
 						String feedMoneyChoice = (String) menu.getChoiceFromOptions(FEED_MONEY_OPTIONS);
 						if (feedMoneyChoice.equals (FEED_MONEY_OPTION_1)) {
 							currentMoneyProvided += 1.0;
@@ -51,6 +57,7 @@ public class VendingMachineCLI {
 						else if (feedMoneyChoice.equals (FEED_MONEY_OPTION_10)) {
 							currentMoneyProvided += 10.0;
 						}
+						Audit.log("Feed Money", moneyBefore, currentMoneyProvided);
 					}
 					else if (purchaseChoice.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
 						Product productChoice = (Product) menu.getChoiceFromOptions(Inventory.INVENTORY_ARRAY);
@@ -61,12 +68,21 @@ public class VendingMachineCLI {
 							System.out.println ("Not Enough Money Provided");
 						}
 						else {
+							double moneyBefore = currentMoneyProvided;
+
 							System.out.println (productChoice.despensingMessage());
 							productChoice.sellProduct();
 							currentMoneyProvided -= productChoice.getPrice();
+							Audit.log(productChoice.getName() + " " + productChoice.getLocation(), moneyBefore, currentMoneyProvided);
 						}
 					}
 					else if (purchaseChoice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
+						double moneyBefore = currentMoneyProvided;
+
+						System.out.println (makeChange(currentMoneyProvided));
+						currentMoneyProvided = 0.0;
+						Audit.log("give change", moneyBefore, currentMoneyProvided);
+						break;
 
 					}
 				}
@@ -74,6 +90,29 @@ public class VendingMachineCLI {
 				break;
 			}
 		}
+	}
+	public static String makeChange (double moneyRemaining){
+		Map<String, Integer> changeBack = new HashMap<>();
+		changeBack.put("quarters", 0);
+		changeBack.put("dimes" , 0);
+		changeBack.put("nickles", 0);
+		while (moneyRemaining >0){
+			if (moneyRemaining >= .25){
+				moneyRemaining -= .25;
+				changeBack.put ("quarters", changeBack.get("quarters") +1);
+
+			}
+			else if (moneyRemaining >= .10){
+				moneyRemaining -= .10;
+				changeBack.put ("dimes", changeBack.get("dimes") +1);
+			}
+			else if (moneyRemaining >= .05) {
+				moneyRemaining -= .05;
+				changeBack.put("nickles", changeBack.get("nickles") + 1);
+			}
+		}
+		return "Returning " + changeBack.get("quarters") + " quarters, " + changeBack.get("dimes") + " dimes, and " + changeBack.get("nickles") + " nickles.";
+
 	}
 
 	public static void main(String[] args) {
