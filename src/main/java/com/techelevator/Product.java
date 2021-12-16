@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import java.text.NumberFormat;
+
 public class Product {
     private String name;
     private double price;
@@ -36,7 +38,8 @@ public class Product {
 
     @Override
     public String toString() {
-       return this.location + " ) " + this.name + " " + this.price;
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+       return this.location + " ) " + this.name + " " + currency.format(this.price);
 
     }
     public String despensingMessage () {
