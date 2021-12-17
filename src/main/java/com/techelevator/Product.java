@@ -60,8 +60,10 @@ public class Product {
         }
     }
     public void sellProduct (){
+
         this.stock -= 1;
 
+        SalesReport.sellProduct(this.name);
     }
     public void setStock(int stock) {
         this.stock = stock;
