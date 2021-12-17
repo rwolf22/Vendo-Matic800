@@ -29,6 +29,7 @@ public class VendingMachineCLI {
 	}
 
 	public void run() {
+		Inventory.restock();
 		double currentMoneyProvided = 0;
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
@@ -92,27 +93,25 @@ public class VendingMachineCLI {
 		}
 	}
 	public static String makeChange (double moneyRemaining){
-		Map<String, Integer> changeBack = new HashMap<>();
-		changeBack.put("quarters", 0);
-		changeBack.put("dimes" , 0);
-		changeBack.put("nickles", 0);
-		while (moneyRemaining >0){
-			if (moneyRemaining >= .25){
-				moneyRemaining -= .25;
-				changeBack.put ("quarters", changeBack.get("quarters") +1);
-
+		int moneyInCents = (int) (moneyRemaining * 100);
+		int numOfQuarters = 0;
+		int numOfDimes = 0;
+		int numOfNickles = 0;
+		while (moneyInCents > 0){
+			if (moneyInCents >= 25){
+				moneyInCents -= 25;
+				numOfQuarters++;
 			}
-			else if (moneyRemaining >= .10){
-				moneyRemaining -= .10;
-				changeBack.put ("dimes", changeBack.get("dimes") +1);
+			else if (moneyInCents >= 10){
+				moneyInCents -= 10;
+				numOfDimes++;
 			}
-			else if (moneyRemaining >= .05) {
-				moneyRemaining -= .05;
-				changeBack.put("nickles", changeBack.get("nickles") + 1);
+			else if (moneyInCents >= 5) {
+				moneyInCents -= 5;
+				numOfNickles++;
 			}
 		}
-		return "Returning " + changeBack.get("quarters") + " quarters, " + changeBack.get("dimes") + " dimes, and " + changeBack.get("nickles") + " nickles.";
-
+		return "Returning " + numOfQuarters + " quarters, " + numOfDimes + " dimes, and " + numOfNickles + " nickles.";
 	}
 
 	public static void main(String[] args) {

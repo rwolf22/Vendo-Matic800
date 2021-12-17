@@ -8,8 +8,8 @@ public class Inventory {
     public static final Product[] INVENTORY_ARRAY = createAllInventory();
 
     private static Product[] createAllInventory () {
-        List <Product> inventoryList = new ArrayList<>();
-       File inventory = new File ("C:\\PROJECTS\\capstone\\Capstone Project 1\\capstone-1\\vendingmachine.csv");
+       List <Product> inventoryList = new ArrayList<>();
+       File inventory = new File ("vendingmachine.csv");
        try (Scanner inventoryReader = new Scanner (inventory)) {
            while (inventoryReader.hasNextLine()) {
                String lineOfText = inventoryReader.nextLine();

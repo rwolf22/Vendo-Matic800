@@ -11,8 +11,8 @@ public class Audit {
 
     public static void log(String action, double moneyBefore, double moneyAfter) {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter myFormatt = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-        String formattedDate = now.format(myFormatt);
+        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        String formattedDate = now.format(myFormat);
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         File logFile = new File("Log.txt");
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(logFile, true))) {

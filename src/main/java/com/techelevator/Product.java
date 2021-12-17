@@ -39,21 +39,21 @@ public class Product {
     @Override
     public String toString() {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-       return this.location + " ) " + this.name + " " + currency.format(this.price);
+       return this.location + ") " + this.name + " " + currency.format(this.price);
 
     }
     public String despensingMessage () {
         if (typeOfProduct.equalsIgnoreCase("Chip")) {
-            return "Crunch Crunch Yum";
+            return "Crunch Crunch, Yum!";
         }
         else if (typeOfProduct.equalsIgnoreCase("Candy")) {
-            return "Munch Munch Yum"; }
+            return "Munch Munch, Yum!"; }
 
         else if (typeOfProduct.equalsIgnoreCase("Drink")) {
-            return "Glug Glug Yum"; }
+            return "Glug Glug, Yum!"; }
 
         else if (typeOfProduct.equalsIgnoreCase("Gum")) {
-            return "Chew Chew Yum"; }
+            return "Chew Chew, Yum!"; }
 
         else {
             return "Do Not Have Type";
