@@ -9,7 +9,8 @@ public class VendingMachineCLI {
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
-	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT };
+	private static final String MAIN_MENU_OPTION_SALES_REPORT = "Sales Report";
+	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, MAIN_MENU_OPTION_SALES_REPORT};
 	private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
 	private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
@@ -29,6 +30,7 @@ public class VendingMachineCLI {
 	public void run() {
 		Inventory.restock();
 		double currentMoneyProvided = 0;
+
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
@@ -83,33 +85,28 @@ public class VendingMachineCLI {
 						currentMoneyProvided = 0.0;
 						Audit.log("give change", moneyBefore, currentMoneyProvided);
 						break;
-
 					}
 				}
-			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
+			}
+			else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				break;
+			}
+			else if (choice.equalsIgnoreCase(MAIN_MENU_OPTION_SALES_REPORT)) {
+				SalesReport.printSalesReport();
 			}
 		}
 	}
 	public static String makeChange (double moneyRemaining){
 		int moneyInCents = (int) (moneyRemaining * 100);
-		int numOfQuarters = 0;
-		int numOfDimes = 0;
-		int numOfNickles = 0;
-		while (moneyInCents > 0){
-			if (moneyInCents >= 25){
-				moneyInCents -= 25;
-				numOfQuarters++;
-			}
-			else if (moneyInCents >= 10){
-				moneyInCents -= 10;
-				numOfDimes++;
-			}
-			else if (moneyInCents >= 5) {
-				moneyInCents -= 5;
-				numOfNickles++;
-			}
-		}
+
+		int numOfQuarters = moneyInCents / 25;
+		moneyInCents = moneyInCents % 25;
+
+		int numOfDimes = moneyInCents / 10;
+		moneyInCents = moneyInCents % 10;
+
+		int numOfNickles = moneyInCents / 5;
+
 		return "Returning " + numOfQuarters + " quarters, " + numOfDimes + " dimes, and " + numOfNickles + " nickles.";
 	}
 

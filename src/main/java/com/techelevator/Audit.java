@@ -13,8 +13,11 @@ public class Audit {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
         String formattedDate = now.format(myFormat);
+
         NumberFormat currency = NumberFormat.getCurrencyInstance();
+
         File logFile = new File("Log.txt");
+
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(logFile, true))) {
             writer.println(formattedDate + " " + action + " " + currency.format(moneyBefore) + " " + currency.format(moneyAfter));
         } catch (IOException e) {
