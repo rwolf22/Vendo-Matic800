@@ -28,25 +28,25 @@ public class ProductTest {
     @Test
     public void dispenseChipTest() {
         String expected = "Crunch Crunch, Yum!";
-        Assert.assertEquals(expected, testChip.despensingMessage());
+        Assert.assertEquals(expected, testChip.dispensingMessage());
     }
 
     @Test
     public void dispenseCandyTest() {
         String expected = "Munch Munch, Yum!";
-        Assert.assertEquals(expected, testCandy.despensingMessage());
+        Assert.assertEquals(expected, testCandy.dispensingMessage());
     }
 
     @Test
     public void dispensingDrinkTest() {
         String expected = "Glug Glug, Yum!";
-        Assert.assertEquals(expected, testDrink.despensingMessage());
+        Assert.assertEquals(expected, testDrink.dispensingMessage());
     }
 
     @Test
     public void dispensingGumTest() {
         String expected = "Chew Chew, Yum!";
-        Assert.assertEquals(expected, testGum.despensingMessage());
+        Assert.assertEquals(expected, testGum.dispensingMessage());
     }
 
     @Test

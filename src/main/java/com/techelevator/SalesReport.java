@@ -24,7 +24,7 @@ public class SalesReport {
         return returnMap;
     }
 
-    public static void sellProduct (String productToSell){
+    public static void addToReport(String productToSell){
 
         salesReport.put(productToSell, salesReport.get(productToSell) + 1);
 

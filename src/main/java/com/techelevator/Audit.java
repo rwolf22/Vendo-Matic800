@@ -22,9 +22,7 @@ public class Audit {
         }
     }
 
-    public static void main(String[] args) {
-        log("Test", 17.05, 67.55);
-    }
+
 
 }
 

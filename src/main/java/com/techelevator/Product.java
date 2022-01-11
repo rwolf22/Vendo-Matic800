@@ -42,7 +42,7 @@ public class Product {
        return this.location + ") " + this.name + " " + currency.format(this.price);
 
     }
-    public String despensingMessage () {
+    public String dispensingMessage() {
         if (typeOfProduct.equalsIgnoreCase("Chip")) {
             return "Crunch Crunch, Yum!";
         }
@@ -63,7 +63,7 @@ public class Product {
 
         this.stock -= 1;
 
-        SalesReport.sellProduct(this.name);
+
     }
     public void setStock(int stock) {
         this.stock = stock;

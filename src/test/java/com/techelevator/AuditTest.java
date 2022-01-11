@@ -22,7 +22,9 @@ public class AuditTest {
         Audit.log("Test", 17.05, 67.55);
         String logLineOfText = "";
         try (Scanner reader = new Scanner(new File("Log.txt"))){
-            logLineOfText = reader.nextLine();
+            while(reader.hasNextLine()) {
+                logLineOfText = reader.nextLine();
+            }
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }

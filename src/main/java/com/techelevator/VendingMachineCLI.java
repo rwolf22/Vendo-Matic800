@@ -3,8 +3,6 @@ package com.techelevator;
 import com.techelevator.view.Menu;
 
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class VendingMachineCLI {
 
@@ -71,8 +69,9 @@ public class VendingMachineCLI {
 						else {
 							double moneyBefore = currentMoneyProvided;
 
-							System.out.println (productChoice.despensingMessage());
+							System.out.println (productChoice.dispensingMessage());
 							productChoice.sellProduct();
+							SalesReport.addToReport(productChoice.getName());
 							currentMoneyProvided -= productChoice.getPrice();
 							Audit.log(productChoice.getName() + " " + productChoice.getLocation(), moneyBefore, currentMoneyProvided);
 						}
